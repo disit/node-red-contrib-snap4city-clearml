@@ -1,0 +1,74 @@
+<script type="text/x-red" data-template-name="clearml-serving-enqueue">
+    <div class="form-row" id="rowAuthentication">
+        <label for="node-input-authentication">Authentication</label>
+        <input type="text" id="node-input-authentication">
+    </div>
+    <div class="form-row">
+        <label for="node-input-task_id"><i class="fa fa-tag"></i>task_id</label>
+        <input type="text" id="node-input-task_id" placeholder="my_hashed_task_id">
+    </div>
+    <div class="form-row">
+        <label for="node-input-queue_name"><i class="fa fa-list"></i>queue_name</label>
+        <input type="text" id="node-input-queue_name" placeholder="my_queue">
+    </div>
+    <div class="form-row">
+        <label for="node-input-input"><i class="fa fa-object-group"></i>input</label>
+        <textarea id="node-input-input" placeholder="{}"></textarea>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="clearml-serving-enqueue">
+    <p>It allows to enqueue a task for execution</p>
+
+       <h3>Inputs</h3>
+       A JSON with these parameters:
+
+       <dl class="message-properties">
+       <dt>task_id
+       <span class="property-type">string</span>
+       </dt>
+       <dd>The hash of the id of the task you want to clone and enqueue</dd>
+       <dt>queue_name
+       <span class="property-type">string</span>
+       </dt>
+       <dd>The name of the queue if not the default one</dd>
+       <dt>input
+       <span class="property-type">json</span>
+       </dt>
+       <dd>Input parameters for the task</dd>
+       </dl>
+       <h3>Outputs</h3>
+       <dl class="message-properties">
+       <dd> Returns a JSON {
+       <br>"status":"ok|ko",
+       <br>"response": response from the task.enqueue function
+       <br>} </dd>
+       </dl>
+
+       <h3>Details</h3>
+       <p>The node can receive a JSON with the parameters described in the Inputs section and with them generate the output JSON.
+       If the values are not present in the input JSON, these are read by those in the configuration. If they are not present
+       in either part, an error is generated for the necessary parameters.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('clearml-serving-enqueue',{
+        category: 'S4CClearml',
+        color: '#7aa6e7',
+        defaults: {
+            authentication: {
+                type: "snap4city-authentication-clearml",
+                required: false
+            },
+            task_id: {value:""},
+            queue_name: {value:""},
+            input: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "service-center.png",
+        label: function() {
+            return this.name || "ClearML Enqueue Task Auth";
+        }
+    });
+</script>

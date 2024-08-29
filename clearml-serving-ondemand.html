@@ -1,0 +1,99 @@
+<!--/* NODE-RED-CONTRIB-SNAP4CITY-USER
+   Copyright (C) 2018 DISIT Lab http://www.disit.org - University of Florence
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation, either version 3 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>. */-->
+
+<script type="text/x-red" data-template-name="clearml-serving-ondemand">
+    <div class="form-row" id="rowAuthentication">
+        <label for="node-input-authentication">Authentication</label>
+        <input type="text" id="node-input-authentication">
+    </div>
+    <div class="form-row">
+        <label for="node-input-endpoint"><i class="icon-tag"></i>machine_id</label>
+        <input type="text" id="node-input-endpoint" placeholder="serving machine task id">
+    </div>
+    <div class="form-row">
+        <label for="node-input-endpoint"><i class="icon-tag"></i>endpoint</label>
+        <input type="text" id="node-input-endpoint" placeholder="endpoint service id">
+    </div>
+    <div class="form-row">
+        <label for="node-input-input"><i class="icon-tag"></i>input</label>
+        <textarea id="node-input-input" placeholder="{}" style="height: 100px;"></textarea>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="clearml-serving-ondemand">
+    <p>It allows to call a clearml Inference service</p>
+
+        <h3>Inputs</h3>
+        A JSON with these parameters:
+
+        <dl class="message-properties">
+        <dt>machine_id
+        <span class="property-type">string</span>
+        </dt>
+        <dd>hash of the serving machine task id</dd>
+        <dt>endpoint
+        <span class="property-type">string</span>
+        </dt>
+        <dd>The endpoint name</dd>
+        <dt>input
+        <span class="property-type">json</span>
+        </dt>
+        <dd>input of the model/service you are calling</dd>
+        </dl>
+        <h3>Outputs</h3>
+        <dl class="message-properties">
+        <dd> Returns a JSON {
+        <br>"status":"ok|ko",
+        <br>"response": {service response}
+        <br>} </dd>
+        </dl>
+
+        <h3>Details</h3>
+        <p>The node can receive a JSON with the parameters described in the Inputs section and with them generate the output JSON.
+        If the values are not present in the input JSON, these are read by those in the configuration. If they are not present
+        in either part, an error is generated for the necessary parameters.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('clearml-serving-ondemand', {
+        category: 'S4CClearml',
+        color: '#7aa6e7',
+        defaults: {
+            authentication: {
+                type: "snap4city-authentication-clearml",
+                required: false
+            },
+            machine_id: {
+                value: ""
+            },
+            endpoint: {
+                value: ""
+            },
+            input: {
+                value: ""
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "service-center.png",
+        label: function() {
+            return this.name || "ClearML On-Demand Serving Auth";
+        }
+    });
+</script>
+
+
+
