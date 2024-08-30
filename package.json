@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-snap4city-clearml",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "Nodes for Snap4city Clearml Integration",
     "dependencies": {
         "request": "^2.88.2",
